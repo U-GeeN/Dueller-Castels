@@ -1,45 +1,80 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class CharacterCanvasProperties: MonoBehaviour
+public class CharacterCanvasProperties : MonoBehaviour
 {
-    InteractableControl selectableController;
     public Loadbar healthBar;
     public Loadbar staminaBar;
-    public Text characterName;
-    public Text damage;
-    public float damageValue;
+    public TextMeshProUGUI characterName;
+    public TextMeshProUGUI damage;
+    public float damageValue = 0;
     public RawImage icon;
-    public Text buttonText;
+    public TextMeshProUGUI buttonText;
     public delegate void ButtonAction();
     public ButtonAction m_ButtonAction;
-    IDisplayable displayable;
+    IDisplayable Displayable;
+
+    // TODO: Action zum updaten bauen
+    
 
     private void Start()
     {
-        selectableController = GetComponentInParent<InteractableControl>();
+        damage.text = damageValue.ToString();
+        gameObject.SetActive(false);
     }
 
-	public void SetDisplayable(IDisplayable newDisplayable) {
-        print("new displayable " + displayable.Name());
-        this.displayable = newDisplayable;
-        InvokeRepeating("UpdateDisplayable", 0.0f, 0.1f);
+    public void SetDisplayable(IDisplayable newDisplayable)
+    {
+        if (newDisplayable != null)
+        {
+            gameObject.SetActive(true);
+            Displayable = newDisplayable;
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Invoked UI Updates of the displayable.
+    /// </summary>
+    private void SetProperties()
+    {
+        SetProperties(Displayable);
+    }
+
+    private void FixedUpdate()
+    {
+        if (Displayable != null)
+        {
+            SetProperties(Displayable);
+        }
     }
 
     public void SetProperties(IDisplayable displayable)
     {
-        SetProperties(displayable.Hitpoints(), 
-                      displayable.HitpointsMax(), 
-                      displayable.Stamina(), 
-                      displayable.StaminaMax(),
+        SetProperties(displayable.Hitpoints(),
+                      displayable.Stamina(),
                       displayable.Damage(),
                       displayable.Name(), 
                       displayable.Icon());
-       
+
     }
 
-    public void SetProperties(float hitPoints, 
+    private void SetProperties(Stat hitPoints, Stat stamina, Stat damage, string name, Texture icon = null)
+    {
+        healthBar.UpdateBar(hitPoints.current, hitPoints.max);
+        staminaBar.UpdateBar(stamina.current, stamina.max);
+
+        this.damage.text = SetValue(damage.current);
+        characterName.text = SetValue(name);
+        SetIcon(icon);
+    }
+
+    private void SetProperties(float hitPoints,
                               float hitPointsMax, 
                               float stamina, 
                               float staminaMax, 
@@ -50,35 +85,35 @@ public class CharacterCanvasProperties: MonoBehaviour
         healthBar.UpdateBar(hitPoints, hitPointsMax);
         staminaBar.UpdateBar(stamina, staminaMax);
 
-        this.damage.text = SetIntValue(damage);
-        characterName.text = SetStringValue(name);
+        this.damage.text = SetValue(damage);
+        characterName.text = SetValue(name);
         SetIcon(icon);
 
     }
 
-    public void SetProperties()
+    public void ResetProperties()
     {
         SetProperties(0, 0, 0, 0, 0, "", null);
-        CancelInvoke("UpdateDisplayable");
+        //CancelInvoke("UpdateDisplayable");
+
     }
 
- 
-    public string SetIntValue(float value = -1)
+
+    public string SetValue(float value = -1)
     {
         if (value < 0)
             return "";
-        else
-            return value + "";
+        return value + "";
+    }
+
+    public string SetValue(string value)
+    {
+        return value;
     }
 
     public void SetIcon(Texture icon = null)
     {
         this.icon.texture = icon;
-    }
-
-    public string SetStringValue(string value)
-    {
-         return value;
     }
 
     public void SetButtonAction(ButtonAction action, string buttonName)
@@ -87,18 +122,12 @@ public class CharacterCanvasProperties: MonoBehaviour
         m_ButtonAction = action;
     }
 
-    public void OnButtonAction () 
+    public void OnButtonAction()
     {
         print("button Action");
         m_ButtonAction();
     }
 
-    /// <summary>
-    /// Invoked UI Updates of the displayable.
-    /// </summary>
-    private void UpdateDisplayable() {
-        SetProperties(displayable);
-    }
 }
 
 // 
@@ -106,17 +135,13 @@ public interface IDisplayable
 {
     Texture Icon();
 
-    float Hitpoints();
+    Stat Hitpoints();
 
-    float HitpointsMax();
+    Stat Stamina();
+
+    Stat Damage();
 
     string Name();
-
-    float Damage();
-
-    float Stamina();
-
-    float StaminaMax();
 
     void UpdateStats();
 }

@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{C047CBE4-7158-D95E-BEB4-0618C44D632B}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/GUI/Action Menu/Scripts/ActionMenueControl.cs">
+    <Files>
+      <File FileName="Assets/_Characters/Scripts/InteractableControl.cs" Line="98" Column="20" />
+      <File FileName="Assets/_Characters/Scripts/Interactable.cs" />
+      <File FileName="Assets/_Characters/ThirdPersonCharacter/Scripts/AICharacterControl.cs" />
+      <File FileName="Assets/_Characters/Scripts/AnimationController.cs" />
+      <File FileName="Assets/_Characters/ThirdPersonCharacter/Scripts/ThirdPersonControl.cs" />
+      <File FileName="Assets/Jobs/Job.cs" />
+      <File FileName="Assets/Jobs/ActionCollection.cs" />
+      <File FileName="Assets/GUI/Action Menu/Scripts/ActionMenueControl.cs" Line="211" Column="37" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c840bc71-d2ab-48a8-acad-6d9fa7ad2f53" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

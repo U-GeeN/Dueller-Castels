@@ -13,8 +13,9 @@ namespace UnityStandardAssets.Utility
         public bool refocus;
 
         public Vector3 rotation;
-        [Header("Testvariablen")]
-        public bool zoomToMouse = false;
+        //[Header("Testvariablen")]
+        //public bool zoomToMouse = false;
+        //public Vector3 addPosition;
 
         void Awake()
         {
@@ -22,36 +23,34 @@ namespace UnityStandardAssets.Utility
             startRot = transform.rotation;
         }
 
+        private void OnEnable()
+        {
+            
+            CameraMoveToParent();
+        }
+
         void Update()
         {
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.Mouse2))
             {
                 CameraRotate();
             }
 
             if (Input.GetKey(KeyCode.R))
             {
-                resetPosition();
+                ResetPosition();
             }
+
             if (refocus)
             {
                 Refocus(startPos);
             }
-
-            if (zoomToMouse) {
-                ZoomToMouse();
-            } else {
-                CameraZoom();
-            }
-
+            CameraZoom();
             CameraMove();
-            CameraMoveToParent();
         }
 
-
-
-        void resetPosition()
+        private void ResetPosition()
         {
             transform.position = startPos;
             transform.rotation = startRot;
@@ -70,31 +69,20 @@ namespace UnityStandardAssets.Utility
             transform.parent.position += transform.forward * mouseScrollValue * ScrollSensetivity;
         }
 
-        void ZoomToMouse () {
-            var cam = Camera.main;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            float zoomDistance = ScrollSensetivity * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime;
-            cam.transform.Translate(ray.direction* zoomDistance, Space.World);
-        }
-
-        void CameraRotate()
+        private void CameraRotate()
         {
             float moveAxisX = Input.GetAxis("Mouse X");
             float moveAxisY = Input.GetAxis("Mouse Y");
-            transform.parent.eulerAngles += Vector3.up * moveAxisX;
-            transform.eulerAngles -= Vector3.right * moveAxisY;
+            transform.parent.eulerAngles += Vector3.up * moveAxisX * motionSensetivity * 2;
+            transform.eulerAngles -= Vector3.right * moveAxisY * motionSensetivity * 2;
         }
 
-        void CameraMove()
+        private void CameraMove()
         {
-            float h = Input.GetAxis("Horizontal") / 10;
-            float v = Input.GetAxis("Vertical") / 10;
-            var tempDir = transform.forward;
-
-            //rotation = Quaternion.Euler(transform.localRotation.x, 0, 0) * transform.forward;
-            //transform.parent.position += new Vector3(v, 0, h) * motionSensetivity;
-            transform.parent.localPosition += transform.parent.forward * v * motionSensetivity;
-            transform.parent.localPosition += transform.parent.right * h * motionSensetivity;
+            float horizontal = Input.GetAxis("Horizontal") / 10;
+            float vertical = Input.GetAxis("Vertical") / 10;
+            transform.parent.localPosition += transform.parent.forward * vertical * motionSensetivity;
+            transform.parent.localPosition += transform.parent.right * horizontal * motionSensetivity;
         }
 
         void CameraMoveToParent()
@@ -107,6 +95,12 @@ namespace UnityStandardAssets.Utility
                 tmp.y *= 7 / 10;
                 transform.localEulerAngles = tmp;
             }
+        }
+
+        public void SetActive(bool value)
+        {
+            enabled = value;
+            
         }
     }
 }

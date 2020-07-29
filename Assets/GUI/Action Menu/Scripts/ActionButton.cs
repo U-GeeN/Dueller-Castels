@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionButton : MonoBehaviour
@@ -6,11 +7,12 @@ public class ActionButton : MonoBehaviour
     public Button button;
     public ActionMenueControl actionMenueController;
     [SerializeField] Image background;
-    [SerializeField] Image icon;
-    [SerializeField] Text title;
+    [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI title;
     public int actionNumber = 0;
 
-    public Color color {
+    public Color Color
+    {
         get {
             return background.color;
         }
@@ -18,7 +20,8 @@ public class ActionButton : MonoBehaviour
             background.color = value;
         }
     }
-    public Sprite sprite {
+    public Sprite Sprite
+    {
         get {
             return icon.sprite;
         }
@@ -26,12 +29,14 @@ public class ActionButton : MonoBehaviour
             icon.sprite = value;
         }
     }
-    public string label {
+    public string Label
+    {
         get {
             return title.text;
         }
         set {
-            title.text = value;
+            string value1 = value;
+            title.text = value1;
         }
     }
 
@@ -39,24 +44,25 @@ public class ActionButton : MonoBehaviour
 	{
         actionMenueController = GetComponentInParent<ActionMenueControl>();
 	}
-	public void Configure(ActionMenueControl actionMenueControl, Sprite sprite, int actionNumber, Color color, string label = "")
+    public void Configure(ActionMenueControl actionMenueControl, Sprite sprite, int actionNumber, Color color, string label = "")
     {
-        this.actionMenueController = actionMenueControl;
-        this.sprite = sprite;
+        actionMenueController = actionMenueControl;
+        this.Sprite = sprite;
         this.actionNumber = actionNumber;
-        this.color = color;
-        this.label = label;
+        this.Color = color;
+        Label = label;
     }
 
-    public void Configure (Sprite sprite, int actionNumber) {
-        this.sprite = sprite;
+    public void Configure(Sprite sprite, int actionNumber)
+    {
+        this.Sprite = sprite;
         this.actionNumber = actionNumber;
-
     }
+
     // Button Function
-    public void ReturnActionNumber () {
-        print("return action number " + actionNumber);
+    public void ReturnActionNumber()
+    {
+        print("action number " + actionNumber);
         actionMenueController.SetActionNumber(actionNumber);
-
     }
 }

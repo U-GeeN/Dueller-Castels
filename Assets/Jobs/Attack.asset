@@ -15,6 +15,9 @@ MonoBehaviour:
   color: {r: 0.67724276, g: 0.8396226, b: 0.69200456, a: 0.84705883}
   icon: {fileID: 21300000, guid: c1e5a9f5d95ba4f48999f1773063d558, type: 3}
   title: Attack
-  destination: {fileID: 0}
-  actionNumber: 0
-  option: 0
+  action:
+    destination: {x: 0, y: 0, z: 0}
+    actionNumber: 0
+    option: 9
+    targetInteractable: {fileID: 0}
+    destinationReached: 0

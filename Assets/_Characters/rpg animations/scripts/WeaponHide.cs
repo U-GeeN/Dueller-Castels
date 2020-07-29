@@ -9,7 +9,7 @@ public class WeaponHide : MonoBehaviour
     Animator animator;
 
     [SerializeField]
-    string weaponTag;
+    internal string weaponTag;
 
     public bool turned = true;
 
@@ -31,7 +31,8 @@ public class WeaponHide : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsTag(weaponTag))
         {
             weaponRenderer.enabled = true;
-        } else
+        }
+        else
         {
             weaponRenderer.enabled = false;
         }

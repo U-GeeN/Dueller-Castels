@@ -98,16 +98,21 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 	bool inputLightHit;
 	bool inputDeath;
 	bool inputAttackR;
-	bool inputAttackL;
-	bool inputCastL;
-	bool inputCastR;
+    bool inputAttackL;
+    bool inputCastL;
+    bool inputCastR;
 	bool inputJump;
 
-	#endregion
+    public RPGCharacterControllerFREE(bool inputAttackL)
+    {
+        this.inputAttackL = inputAttackL;
+    }
 
-	#region Initialization and Inputs
+    #endregion
 
-	void Start(){
+    #region Initialization and Inputs
+
+    void Start(){
 		//Find the Animator component.
 		if(animator = GetComponentInChildren<Animator>()){
 		}
@@ -167,17 +172,21 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 			else{
 				Revive();
 			}
-		}
-		if(inputAttackL && canAction && isGrounded){
+        }
+        if (inputAttackL && canAction && isGrounded)
+        {
 			Attack(1);
 		}
-		if(inputAttackR && canAction && isGrounded){
+        if (inputAttackR && canAction && isGrounded)
+        {
 			Attack(2);
 		}
-		if(inputCastL && canAction && isGrounded && !isStrafing){
+        if (inputCastL && canAction && isGrounded && !isStrafing)
+        {
 			AttackKick(1);
 		}
-		if(inputCastR && canAction && isGrounded && !isStrafing){
+        if (inputCastR && canAction && isGrounded && !isStrafing)
+        {
 			AttackKick(2);
 		}
 		//Strafing.

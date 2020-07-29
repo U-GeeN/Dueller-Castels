@@ -8,7 +8,7 @@ public class OnBlockEnter: StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
      
 
-        animator.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().OnBlockExit();
+        //animator.GetComponent<AnimationController>().OnBlockExit();
 
 
 	}

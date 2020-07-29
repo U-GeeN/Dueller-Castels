@@ -1,74 +1,91 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 public class WeaponProperties : MonoBehaviour {
 
-    public BoxCollider attackCol;
-    public BoxCollider blockCol;
+    public BoxCollider attackCollider;
+    public BoxCollider blockCollider;
     public int damage;      // 
     public int speed;       //berechtet sich aus weight und balance
     public float weight;
     public float balance;
-    public Interactable ownSelectable;
-    [SerializeField] ThirdPersonCharacter m_Character;
+    public Interactable ownInteractable;
+    private AnimationController animController;
 
-	// Use this for initialization
-	void Start () {
-        ownSelectable = GetComponentInParent<Interactable>();
-        attackCol = GetComponent<BoxCollider>();
-        m_Character = GetComponentInParent<ThirdPersonCharacter>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void OnAttackEnter () {
-        attackCol.enabled = true;
-
+    // Use this for initialization
+    void Start () {
+        ownInteractable = GetComponentInParent<Interactable>();
+        attackCollider = GetComponent<BoxCollider>();
+        animController = GetComponentInParent<AnimationController>();
+        if (animController)
+        {
+            animController.OnUnsheathWeapon += SetParent;
+            animController.OnSheathWeapon += SetParent;
+            animController.OnAttackEnterEvent += OnAttackEnter;
+            animController.OnAttackExitEvent += OnAttackExit;
+        }
+        
     }
 
-    public void OnAttackExit () {
-        attackCol.enabled = false;
+    //TODO: Sollte die Waffe wissen wo ihr Holster platz ist?
+    public void SetParent(Transform parent)
+    {
+        transform.SetParent(parent);
+        transform.localPosition = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;
+    }
+
+    public void OnAttackEnter () 
+    {
+        print(name + " trigger on");
+        attackCollider.enabled = true;
+    }
+
+    public void OnAttackExit () 
+    {
+        attackCollider.enabled = false;
     }
 
     public void OnBlockEnter()
     {
-        blockCol.enabled = true;
+        blockCollider.enabled = true;
     }
 
     public void OnBlockExit()
     {
-        blockCol.enabled = false;
+        blockCollider.enabled = false;
     }
 
-	private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
 	{
-        // ist other eine Waffe oder Chacacter?
-        if (other.GetComponent<WeaponProperties>() || other.tag == "BlockCollider")
+        // other is a weapon
+        if (other.GetComponent<WeaponProperties>() || other.CompareTag("BlockCollider"))
         {
             // attacke abbrechen
             print("Schwert an Schwert");
-            m_Character.BlockHit();
+            animController.BlockHit();
             print(name + " trigger off");
-            //attackCol.isTrigger = false;
-            attackCol.enabled = false;
+            attackCollider.enabled = false;
         }
-
-        StatsControl otherHp = other.GetComponent<StatsControl>();
-        if (otherHp != null && other.GetComponent<Interactable>() != ownSelectable) 
+        // other is character
+        StatsControl otherStats = other.GetComponent<StatsControl>();
+        if (otherStats && other.GetComponent<Interactable>() != ownInteractable)
         {
-            print(name + " trigger off");
-            //attackCol.isTrigger = false;
-            attackCol.enabled = false;
+            attackCollider.enabled = false;
+            bool otherIsIncapacitated = otherStats.OnGotHit(ownInteractable.statsControl.stats.CalculateDamage(), Vector3.forward);
+            print(name + " trigger off, other dead " + otherIsIncapacitated);
+            if (otherIsIncapacitated)
+            {
+                // Inform Interactable that action stopped
+                print("stop executing Action");
+                animController.StopAfterTime();
+                ownInteractable.ActionFinished();
+            }
         }
 	}
 
-    private void OnCollisionExit()
+    private void OnCollisionExit(Collision collision)
     {
         print(name + " trigger on");
-        //attackCol.isTrigger = true;
-        attackCol.enabled = true;
+        attackCollider.enabled = true;
     }
 }

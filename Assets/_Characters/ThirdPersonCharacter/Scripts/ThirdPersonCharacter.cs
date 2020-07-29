@@ -121,16 +121,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public void SetMotion(Vector3 move, bool crouch, bool jump, float turn = 0.0f)
 		{
 
-			// convert the world relative moveInput vector into a local-relative
-			// turn amount and forward amount required to head in the desired
-			// direction.
-			if (move.magnitude > 1f) move.Normalize();
+            // convert the world relative moveInput vector into a local-relative
+            // turn amount and forward amount required to head in the desired
+            // direction.
+            if (move.magnitude > 1f) { move.Normalize(); }
 
 			move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-
-            m_TurnAmount = Mathf.Clamp(turn * turn * Mathf.Sign(turn), -1f, 1f);
+            float i_Turn = turn;
+            m_TurnAmount = Mathf.Clamp(i_Turn * i_Turn * Mathf.Sign(i_Turn), -1f, 1f);
 			m_ForwardAmount = move.z;
             m_StrafeAmmount = move.x;
             ApplyExtraTurnRotation();

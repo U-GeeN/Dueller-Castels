@@ -1,15 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Loadbar: MonoBehaviour {
     [SerializeField] RectTransform barBackground;
     [SerializeField] RectTransform bar;
-    [SerializeField] Text titleLabel;
-    [SerializeField] Text valueLabel;
+    [SerializeField] TextMeshProUGUI titleLabel;
+    [SerializeField] TextMeshProUGUI valueLabel;
 
     public string titleString;
     public float valueMax;
-    public float valueCurrent;
+    private float _valueCurrent;
+    public float ValueCurrent
+    {
+        get { return _valueCurrent; }
+        set
+        {
+            _valueCurrent = value; 
+            //UpdateBar(ValueCurrent, valueMax);
+            valueLabel.text = FormatNumber(_valueCurrent) + " / " + FormatNumber(valueMax);
+            valueCurrentOld = _valueCurrent;
+        }
+    }
     public float barWidthMin = 10;
     float scale;
     float valueCurrentOld = -1;
@@ -30,16 +42,17 @@ public class Loadbar: MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (valueCurrentOld != valueCurrent)
-        {
-            UpdateBar(valueCurrent, valueMax);
-        }
+        //if (system.math.abs(valuecurrentold - valuecurrent) > mathf.epsilon)
+        //{
+        //    updatebar(valuecurrent, valuemax);
+        //}
 
-        if (valueCurrent / valueMax < 0.5f)
+        //makes bar pulse when under 50%
+        if (ValueCurrent / valueMax < 0.5f)
         {
             var color = barImage.color;
-            color.a = Mathf.PingPong(Time.time, 0.5f) + valueCurrent / valueMax;
-            color.a = Mathf.Clamp(color.a, valueCurrent / valueMax, pulseMax);
+            color.a = Mathf.PingPong(Time.time, 0.5f) + ValueCurrent / valueMax;
+            color.a = Mathf.Clamp(color.a, ValueCurrent / valueMax, pulseMax);
             barImage.color = color;
         } 
         else
@@ -49,12 +62,13 @@ public class Loadbar: MonoBehaviour {
             barImage.color = color;
         }
 
-        if (valueCurrent < 1 && barImage.enabled)
+        //disable bar color when too small
+        if (ValueCurrent < 1 && barImage.enabled)
         {
             barImage.enabled = false;
         }
 
-        if (valueCurrent > 0 && !barImage.enabled)
+        if (ValueCurrent > 0 && !barImage.enabled)
         {
             barImage.enabled = true;
         }
@@ -74,11 +88,11 @@ public class Loadbar: MonoBehaviour {
 
     public void UpdateBar (float valueCurrent, float valueMax) 
     {
-        this.valueCurrent = valueCurrent;
+        this.ValueCurrent = valueCurrent;
         this.valueMax = valueMax;
 
-            bar.sizeDelta = new Vector2(barWidthMin + valueCurrent / valueMax * scale, bar.sizeDelta.y);
-            valueCurrent = Mathf.Round(valueCurrent);
+        bar.sizeDelta = new Vector2(barWidthMin + (valueCurrent / valueMax * scale), bar.sizeDelta.y);
+        valueCurrent = Mathf.Round(valueCurrent);
 
         valueLabel.text = FormatNumber(valueCurrent) + " / " + FormatNumber(valueMax);
         valueCurrentOld = valueCurrent;

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Take Control
   m_EditorClassIdentifier: 
   color: {r: 0.67724276, g: 0.8396226, b: 0.69200456, a: 0.84705883}
-  icon: {fileID: 21300000, guid: 665fbba7bf23c4c39be860e922bb4e14, type: 3}
+  icon: {fileID: 21300000, guid: 6f2b87f644ccd47149c5c578db04175e, type: 3}
   title: Take Control
-  destination: {fileID: 0}
-  actionNumber: 0
-  option: 0
+  action:
+    destination: {x: 0, y: 0, z: 0}
+    actionNumber: 0
+    option: 4
+    targetInteractable: {fileID: 0}
+    destinationReached: 0

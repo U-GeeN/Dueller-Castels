@@ -2,36 +2,36 @@
 
 public class MouseControlForMeshCollider : MonoBehaviour
 {
-    Interactable selectable;
+    internal Interactable interactable;
 
     // Start is called before the first frame update
     void Start()
     {
-        selectable = GetComponentInParent<Interactable>();
+        interactable = GetComponentInParent<Interactable>();
     }
 
     // highlight + set targeted
     private void OnMouseEnter()
     {
-        selectable.OnMouseEnter();
+        interactable.OnMouseEnter();
     }
 
     // highlight + reset targeted
     private void OnMouseExit()
     {
-        selectable.OnMouseExit();
+        interactable.OnMouseExit();
     }
 
     // highlight + set Selected
     private void OnMouseUpAsButton()
     {
-        selectable.OnMouseUpAsButton();
+        interactable.OnMouseUpAsButton();
     }
 
     // bei Mausklick auf dieses Selectable
     private void OnMouseDown()
     {
-        selectable.OnMouseDown();
+        interactable.OnMouseDown();
     }
 
 }

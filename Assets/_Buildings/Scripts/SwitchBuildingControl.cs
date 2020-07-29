@@ -2,16 +2,14 @@
 using UnityStandardAssets.Utility;
 using UnityEngine;
 
-public class SwitchBuildingControl : MonoBehaviour {
+public class CameraControl : MonoBehaviour
+{
 
-
-    BuildingControl control;
     BirdViewCam birdViewCam;
     SmoothFollow smoothFollow;
 
 	// Use this for initialization
 	void Start () {
-        control = GetComponent<BuildingControl>();
         birdViewCam = Camera.main.GetComponent<BirdViewCam>();
         smoothFollow = Camera.main.GetComponent<SmoothFollow>();
 	}
@@ -25,7 +23,7 @@ public class SwitchBuildingControl : MonoBehaviour {
         birdViewCam.enabled = !value;
         // TODO: anzeige zum nächsten waypoint machen und aktivieren
         // Direct Control of Character
-        control.enabled = value;
+       
         smoothFollow.SetActive(value, transform);
         print(name + " hat Kameras umgeschaltet. Selected = " + value);
     }

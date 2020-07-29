@@ -24,7 +24,7 @@ public class OnBlockExit : StateMachineBehaviour {
         {
             Debug.Break();
 
-            animator.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().OnAttackEnter(); 
+            
         }
 
 	}

@@ -5,8 +5,9 @@ public class Highlights : MonoBehaviour
 {
     Interactable interactable;
 
-    [System.Serializable] 
-    struct Highlighters {
+    [System.Serializable]
+    struct Highlighters
+    {
         public GameObject highlighter;
         public bool highlighted;
         public bool selected;
@@ -18,7 +19,7 @@ public class Highlights : MonoBehaviour
 	{
         interactable = GetComponentInParent<Interactable>();
         interactable.OnHighlighted += OnHighlighted;
-        interactable.OnEnabled += OnEnabled;
+        interactable.OnSelected += OnEnabled;
 	}
 
 	void Start()
@@ -30,10 +31,10 @@ public class Highlights : MonoBehaviour
     void OnDestroy()
     {
         interactable.OnHighlighted -= OnHighlighted;
-        interactable.OnEnabled -= OnEnabled;
+        interactable.OnSelected -= OnEnabled;
     }
 
-    void OnHighlighted(bool isActive) 
+    private void OnHighlighted(bool isActive)
     {
         foreach (var item in highlights)
         {
@@ -44,7 +45,7 @@ public class Highlights : MonoBehaviour
         }
     }
 
-    void OnEnabled(bool isActive)
+    private void OnEnabled(bool isActive)
     {
         foreach (var item in highlights)
         {

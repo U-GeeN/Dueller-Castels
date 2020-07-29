@@ -21,7 +21,7 @@ public class IKControl : MonoBehaviour
     }
 
 	//a callback for calculating IK
-	void OnAnimatorIK()
+	void OnAnimatorIK(int layerIndex)
     {
         if (animator)
         {
