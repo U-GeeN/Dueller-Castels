@@ -113,7 +113,6 @@ public class StatsControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("StatsControl trigger enter " + name);
         WeaponProperties otherWeapon = other.transform.GetComponent<WeaponProperties>();
         StatsControl otherStats = other.transform.GetComponentInParent<StatsControl>();
         

@@ -382,7 +382,7 @@ public class AnimationController : MonoBehaviour
     public void OnActionExecute(Interactable.ActionOption actionOption, Vector3 destination, Interactable target)
     {
         print("AnimC " + name + " performs action " + actionOption + ", destination " + destination + ", target " + target);
-        StopAfterTime();
+        ResetToIdleState();
         switch (actionOption)
         {
             case Interactable.ActionOption.Harvest: 
@@ -398,7 +398,7 @@ public class AnimationController : MonoBehaviour
 
                 break;
             case Interactable.ActionOption.Idle:
-                StopAfterTime();
+                ResetToIdleState();
 
                 break;
             default:
@@ -407,13 +407,14 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    public void StopAfterTime()
+    public void ResetToIdleState()
     {
         //TODO: prüfen wer die Action beenden darf; senden welche action beendet wurde?
         Debug.Log("AnimC action finished");
-        //ownInteractable.ActionFinished();
+        
         m_Animator.SetBool(combatMode, false);
         m_Animator.SetBool(actionStart, false);
+
     }
     #endregion
 }

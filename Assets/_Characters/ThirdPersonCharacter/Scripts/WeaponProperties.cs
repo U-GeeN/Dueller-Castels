@@ -77,7 +77,7 @@ public class WeaponProperties : MonoBehaviour {
             {
                 // Inform Interactable that action stopped
                 print("stop executing Action");
-                animController.StopAfterTime();
+                animController.ResetToIdleState();
                 ownInteractable.ActionFinished();
             }
         }

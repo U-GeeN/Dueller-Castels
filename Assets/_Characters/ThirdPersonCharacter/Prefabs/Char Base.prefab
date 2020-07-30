@@ -1543,8 +1543,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 11513f9bf8b0c439e9abd6e2f7fea3c2, type: 2}
   - {fileID: 11400000, guid: 3e6939edb040243138b9bfd2840a3a85, type: 2}
   - {fileID: 11400000, guid: 44a9a6d34e74e4834975b5030b5b72b3, type: 2}
-  passiveJobs:
   - {fileID: 11400000, guid: 963836117b88848308125b5b91497401, type: 2}
+  - {fileID: 11400000, guid: 67122e5246924014cb4fd027f1450d9f, type: 2}
+  passiveJobs:
   - {fileID: 11400000, guid: 9a00eb7188d184c4baff8dba28ac30b5, type: 2}
   - {fileID: 11400000, guid: 3bd70df0095444836be6d43790b86dda, type: 2}
   actionStack: []
@@ -1562,7 +1563,7 @@ MonoBehaviour:
   isControlled: 0
   takeControl: 0
   selectAttached: 0
-  _factionId: 0
+  _factionId: 1
   factionName: 
 --- !u!114 &7619299617344940820
 MonoBehaviour:

@@ -6,7 +6,7 @@ public class ActionButton : MonoBehaviour
 {
     public Button button;
     public ActionMenueControl actionMenueController;
-    [SerializeField] Image background;
+    [SerializeField] private Image background;
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI title;
     public int actionNumber = 0;

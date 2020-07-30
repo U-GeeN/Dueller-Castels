@@ -65,6 +65,7 @@ public class Interactable : MonoBehaviour
         None,
         Idle,   // Free to do what he wants (= Halt for now)
         Move,
+        Talk,
         Build,
         EnterInteractable,
         ExitInteractable,
@@ -72,7 +73,7 @@ public class Interactable : MonoBehaviour
         Deattach,
         Harvest,
         Attack,
-        Follow,
+        Follow, // same as attach?
     }
 
     public bool IsTargeted => interactableControler ? interactableControler.targeted == this : false;
@@ -120,7 +121,6 @@ public class Interactable : MonoBehaviour
         {
             takeControl = false;
             SwitchControl();
-
         }
     }
 
@@ -131,7 +131,6 @@ public class Interactable : MonoBehaviour
     /// </summary>
     private void SwitchControl()
     {
-
         if (IsControlled)
         {
             SetPointClickControl();
@@ -140,7 +139,6 @@ public class Interactable : MonoBehaviour
         {
             SetDirectControl();
         }
-
     }
 
     /// <summary>
@@ -246,16 +244,17 @@ public class Interactable : MonoBehaviour
     }
 
     // highlight + set Selected
-    public void OnMouseUpAsButton()
+    /*public void OnMouseUpAsButton()
     {
         if (IsControlled || IsOverUI)
             return;
 
         SetAsActiveInController(true);
     }
+    */
 
     // bei Mausklick auf dieses Selectable
-    public void OnMouseDown()
+    /*public void OnMouseDown()
     {
         // nichts machen wenn kontrolliert
         if (IsControlled || IsOverUI)
@@ -267,32 +266,19 @@ public class Interactable : MonoBehaviour
             SetAsActiveInController(false);
         }
     }
+    */
     #endregion
 
    
 
     #region Custom Events
 
-    // click on plane
-    public void PerformAction(int actionOptionNumber, Vector3 destination)
-    {
-        var option = (ActionOption)actionOptionNumber;
-        PerformAction(option, destination);
-    }
-
-    // click on plane
     public void PerformAction(ActionOption actionOption, Vector3 destination)
     {
         print("perform " + actionOption + " at destination " + destination);
         PerformAction(actionOption, destination, null);
     }
-    // click on Interactable
-    public void PerformAction(int actionOptionNumber, Interactable target)
-    {
-        var option = (ActionOption)actionOptionNumber;
-        PerformAction(option, target);
-    }
-    // click on Interactable
+
     public void PerformAction(ActionOption actionOption, Interactable target)
     {
         print("perform " + actionOption + " at " + target.name);
@@ -307,11 +293,8 @@ public class Interactable : MonoBehaviour
     }
     public void PerformAction(Action action)
     {
-        // TODO: difference between adding vs replacing action
         actionStack.Add(action);
-
         ExecuteNextAction();
-        //OnActionExecute(job.option, job.destination, job.targetInteractable);
     }
     public void CancelActions()
     {

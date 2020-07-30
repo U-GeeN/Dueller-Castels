@@ -14,7 +14,7 @@ public class InteractableControl : MonoBehaviour, IPointerEnterHandler, IPointer
     public Interactable active;
     public Interactable controlled;
 
-    public Job[] passiveJobs;
+    public Job[] defaultJobs;
 
     [SerializeField] readonly float longClickTime = 0.15f;
     //[SerializeField] bool islongClick;
@@ -57,29 +57,21 @@ public class InteractableControl : MonoBehaviour, IPointerEnterHandler, IPointer
         if (Input.GetButtonDown("Fire1"))
         {
             // Deselect current selected on click
-            // konflikt mit OnMouseDown
-            print("Get Left MouseButton Down");
-            if (isOverUI)
+            if (!isOverUI)
             {
-                
-                // (noch aktuell?) TODO: muss vor selectable object "OnMouseDown" passieren
-                if (active)
-                {
-                    print("active == null " + active);
-                    // deactivate highlight
-                    //active.SetAsActiveInController(false);
-                    SetInteractableAsActive(active);
-                }
-            }
-            else
-            {
-
                 actionGui.Dismiss();
-                if (active)
-                {
-                    active.SetAsActiveInController(false);
-                }
                 
+                if (targeted)
+                {
+                    if(targeted != active)
+                    {
+                        if (active)
+                        {
+                            active.SetAsActiveInController(false);
+                        }
+                        targeted.SetAsActiveInController(true);
+                    }
+                }
             }
         }
 
@@ -218,9 +210,9 @@ public class InteractableControl : MonoBehaviour, IPointerEnterHandler, IPointer
             {
                 // show overview menu (view buildings, characters...)
                 // create and show the menue of interactable control
-                print("longclick on ground: MousePosition " + Input.mousePosition + "; jobs " + passiveJobs.Length);
+                print("longclick on ground: MousePosition " + Input.mousePosition + "; jobs " + defaultJobs.Length);
                 //actionGui.ShowActionMenue(gameObject, false, Input.mousePosition);
-                actionGui.ShowActionMenue(gameObject, passiveJobs, Input.mousePosition);
+                actionGui.ShowActionMenue(gameObject, defaultJobs, Input.mousePosition);
             }
         }
     }

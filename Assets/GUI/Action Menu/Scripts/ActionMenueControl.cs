@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class ActionMenueControl: MonoBehaviour
 {
     [SerializeField] InteractableControl interactableControl;
@@ -9,10 +9,10 @@ public class ActionMenueControl: MonoBehaviour
     [SerializeField] private GameObject iconPrefab;
     [SerializeField] CanvasGroup canvasGroup;
     [SerializeField] List<ActionButton> actionButton;
-    public int actionNumber;
+    private Job[] jobArray;
     /// Action gui position on screen
-    [SerializeField] Vector3 guiScreenPosition;
-    [SerializeField] Vector3 guiWorldPosition;
+    private Vector3 guiScreenPosition;
+    private Vector3 guiWorldPosition;
     private bool isFading = false;
 
     // Start is called before the first frame update
@@ -76,8 +76,6 @@ public class ActionMenueControl: MonoBehaviour
         
     }
 
-    
-
     private bool SetGuiWorldPosition()
     {
 
@@ -127,7 +125,7 @@ public class ActionMenueControl: MonoBehaviour
             for (int i = 0; i < jobArray.Length; i++)
             {
 
-                Vector3 offset = GetXYDirection((Mathf.PI * 2 / jobArray.Length * i) + (Mathf.PI / 2), 60f);
+                Vector3 offset = GetXYDirection((Mathf.PI * 2 / jobArray.Length * i) + (Mathf.PI / 2), 70f);
 
                 offset.z = 0;
 
@@ -160,7 +158,7 @@ public class ActionMenueControl: MonoBehaviour
             //interactable = interactableGO.GetComponent<InteractableControl>();
             //TODO: make InteractableControl compatable
         }
-        Job[] jobArray;
+        
         if (isActiveJobArray)
         {
             jobArray = interactable.activeJobs;
@@ -169,7 +167,7 @@ public class ActionMenueControl: MonoBehaviour
         {
             jobArray = interactable.passiveJobs;
         }
-        // !actionMenue.activeSelf && 
+        
         if (jobArray.Length != 0)
         {
             if (isWorldPosition)
@@ -207,31 +205,23 @@ public class ActionMenueControl: MonoBehaviour
     // Enrypoint click on Action button
     public void SetActionNumber(int number)
     {
-        print(interactableControl.active.name + " executing job nr " + number);
+        // TODO: unterscheidung no/ character selected
+        
         // TODO: Check which interactable should perform action
-        if (interactable == null)
+        if (interactable)
         {
-            // interactable = interactableGO.GetComponent<InteractableControl>();
-            // TODO: make InteractableControl compatable to perform action
-            // interactableControl.PerformAction(number, guiWorldPosition);
-        }
-        else
-        {
-            if (interactableControl.targeted)
+            if (interactableControl.active)
             {
-                interactable.PerformAction(number, interactableControl.targeted);
+                print(interactableControl.active.name + " executing job nr " + number + " on " + interactable.name);
+                Action action = jobArray[number].action;
+                action.targetInteractable = interactable;
+                action.destination = guiWorldPosition;
+                action.destinationReached = false;
+                interactableControl.active.PerformAction(action);
             }
-            interactable.PerformAction(number, guiWorldPosition);
         }
+        
 
-        actionNumber = number;
-        Dismiss();
-    }
-
-    public void SetActionOption(Interactable.ActionOption action)
-    {
-        print(interactableControl.active.name + "perform Action on gui position" + action.ToString());
-        interactableControl.active.PerformAction(action, guiWorldPosition);
         Dismiss();
     }
 

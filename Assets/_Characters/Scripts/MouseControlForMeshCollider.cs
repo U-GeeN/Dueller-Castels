@@ -25,13 +25,13 @@ public class MouseControlForMeshCollider : MonoBehaviour
     // highlight + set Selected
     private void OnMouseUpAsButton()
     {
-        interactable.OnMouseUpAsButton();
+        //interactable.OnMouseUpAsButton();
     }
 
     // bei Mausklick auf dieses Selectable
     private void OnMouseDown()
     {
-        interactable.OnMouseDown();
+        //interactable.OnMouseDown();
     }
 
 }
