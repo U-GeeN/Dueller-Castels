@@ -18,8 +18,8 @@ MonoBehaviour:
   action:
     destination: {x: 0, y: 0, z: 0}
     actionNumber: 0
-    option: 8
+    option: 9
     targetInteractable: {fileID: 0}
     destinationReached: 1
-    isFinished: 1
+    isFinished: 0
     priority: 0

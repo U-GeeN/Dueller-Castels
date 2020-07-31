@@ -71,7 +71,7 @@ public class WeaponProperties : MonoBehaviour {
         if (otherStats && other.GetComponent<Interactable>() != ownInteractable)
         {
             attackCollider.enabled = false;
-            bool otherIsIncapacitated = otherStats.OnGotHit(ownInteractable.statsControl.stats.CalculateDamage(), Vector3.forward);
+            bool otherIsIncapacitated = otherStats.OnGotHit(ownInteractable.statsControl.stats.CalculateDamage(0.8f), Vector3.forward);
             print(name + " trigger off, other dead " + otherIsIncapacitated);
             if (otherIsIncapacitated)
             {

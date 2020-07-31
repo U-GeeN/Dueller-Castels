@@ -74,6 +74,7 @@ public class Interactable : MonoBehaviour
         Harvest,
         Attack,
         Follow, // same as attach?
+        Inspect
     }
 
     public bool IsTargeted => interactableControler ? interactableControler.targeted == this : false;
