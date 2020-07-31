@@ -11,11 +11,13 @@ TrueTypeFontImporter:
   fontName: ".\x7F"
   fontNames:
   - ".\x7F"
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: f0155dcc7dd9dc848a0f10091d13702d, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
