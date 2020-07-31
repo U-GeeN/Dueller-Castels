@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 using UnityStandardAssets.Utility;
 
@@ -58,6 +59,7 @@ public class Interactable : MonoBehaviour
     public delegate void GuiUpdateEvent(IDisplayable displayable);
     public event GuiUpdateEvent GuiUpdate;
 
+    public bool removeFirst = false;
     public enum ActionOption
     {
         //Halt,   // Stop ,backup action
@@ -81,6 +83,20 @@ public class Interactable : MonoBehaviour
     public bool IsSelected => interactableControler ? interactableControler.active == this : false;
     public bool IsControlled => interactableControler && interactableControler.controlled == this;
     public bool IsOverUI => interactableControler.isOverUI;
+
+    private void Testfunction()
+    {
+        isTargeted = IsTargeted;
+        isSelected = IsSelected;
+        isControlled = IsControlled;
+        
+        if (takeControl)
+        {
+            takeControl = false;
+            SwitchControl();
+        }
+    }
+
 
     // Use this for initialization
     void Start()
@@ -110,19 +126,11 @@ public class Interactable : MonoBehaviour
 
         //OnActionExecute(ActionOption.ExitInteractable, Vector3.zero, this);
     }
-
+    
     // Update is called once per frame
     void Update()
     {
-        isTargeted = IsTargeted;
-        isSelected = IsSelected;
-        isControlled = IsControlled;
-
-        if (takeControl)
-        {
-            takeControl = false;
-            SwitchControl();
-        }
+        Testfunction();
     }
 
     #region Interactable Controller functions
@@ -244,33 +252,7 @@ public class Interactable : MonoBehaviour
         SetAsTargetedInController(false);
     }
 
-    // highlight + set Selected
-    /*public void OnMouseUpAsButton()
-    {
-        if (IsControlled || IsOverUI)
-            return;
-
-        SetAsActiveInController(true);
-    }
-    */
-
-    // bei Mausklick auf dieses Selectable
-    /*public void OnMouseDown()
-    {
-        // nichts machen wenn kontrolliert
-        if (IsControlled || IsOverUI)
-            return;
-
-        // deselektieren wenn selektiert
-        if (IsSelected)
-        {
-            SetAsActiveInController(false);
-        }
-    }
-    */
     #endregion
-
-   
 
     #region Custom Events
 
@@ -305,6 +287,12 @@ public class Interactable : MonoBehaviour
     public void InsertAction(Action action)
     {
         actionStack.Insert(0, action);
+        ExecuteNextAction();
+    }
+
+    public void RemoveAction(int index = 0)
+    {
+        actionStack.RemoveAt(index);
     }
 
     public Action GetCurrentAction()

@@ -44,6 +44,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         [SerializeField] private float m_Turn;
         public bool followTarget;
         public BehaviourMode mode;
+        public float desiredSocialization = 0;
+
         /// <summary>
         /// distance character tries to hold to enemy
         /// </summary>
@@ -226,6 +228,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             GetTargetFromMousePosition();
         }
 
+        private void CancelCurrentAction()
+        {
+            ownInteractable.RemoveAction();
+        }
+
         #endregion
 
         #region Navigation
@@ -376,7 +383,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 ResetWaypoint();
             }
 
-            // Enter sight trigger
+            // Enter sight trigger -> Move to AIBehaviour
             if (other.GetComponent<Interactable>() != null && !other.isTrigger)
             {
                 Interactable otherInteractable = other.GetComponent<Interactable>();
@@ -400,8 +407,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 }
                 else
                 {
-
+                    if (desiredSocialization < 5)
+                    {
+                        desiredSocialization += 1;
+                        return;
+                    }
+                    desiredSocialization = 0;
+                    
+                    // Check if call interactable
+                    Action talk = new Action(Vector3.zero, 0, Interactable.ActionOption.Talk, otherInteractable);
+                    ownInteractable.InsertAction(talk);
+                    Invoke("CancelCurrentAction", 10.0f);
                     print(name + " wants to talk to " + otherInteractable.name);
+                    //TODO: Dont allways talk
                 }
             }
         }
