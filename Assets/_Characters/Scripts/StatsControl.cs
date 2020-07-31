@@ -45,7 +45,7 @@ public class StatsControl : MonoBehaviour
         if (hitSelf)
         {
             hitSelf = false;
-            OnGotHit(stats.CalculateDamage(), new Vector3(1, 0, 0));
+            _ = OnGotHit(stats.CalculateDamage(), new Vector3(1, 0, 0));
         }
 
         if (!stats.isDead && !stats.isIncapacitated)

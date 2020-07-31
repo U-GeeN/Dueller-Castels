@@ -7,7 +7,6 @@ using UnityStandardAssets.Characters.ThirdPerson;
 [RequireComponent(typeof (Interactable))]
 public class ThirdPersonControl : MonoBehaviour
 {
-
     private AnimationController animControl; // A reference to the ThirdPersonCharacter on the object
     private Interactable m_Interactable;
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform

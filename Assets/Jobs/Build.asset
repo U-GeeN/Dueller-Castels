@@ -16,8 +16,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 1fbcf20193a174e629a66e2206744585, type: 3}
   title: Build
   action:
-    destination: {x: 0, y: 0, z: 0}
+    destination: {x: -30.352158, y: 13.605567, z: -3.2113953}
     actionNumber: 0
-    option: 3
+    option: 4
     targetInteractable: {fileID: 0}
-    destinationReached: 0
+    destinationReached: 1
+    isFinished: 0
+    priority: 0

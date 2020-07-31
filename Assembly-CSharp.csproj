@@ -83,7 +83,6 @@
     <Compile Include="Assets\Rokoko\Studio\Scripts\VirtualProduction\VirtualProductionTrackers.cs" />
     <Compile Include="Assets\Terrain\Scripts\RoadControl.cs" />
     <Compile Include="Assets\_Buildings\Scripts\BuildingControl.cs" />
-    <Compile Include="Assets\_Buildings\Scripts\SwitchBuildingControl.cs" />
     <Compile Include="Assets\_Buildings\StoneKeep\Scripts\StructureControl.cs" />
     <Compile Include="Assets\_Buildings\StoneKeep\Scripts\WaypointControl.cs" />
     <Compile Include="Assets\_Characters\Blocky Character Animation Pack\Scripts\CameraController.cs" />
@@ -105,9 +104,7 @@
     <Compile Include="Assets\_Characters\Scripts\AnimationController.cs" />
     <Compile Include="Assets\_Characters\Scripts\BirdViewCam.cs" />
     <Compile Include="Assets\_Characters\Scripts\CharacterAnimatorControl.cs" />
-    <Compile Include="Assets\_Characters\Scripts\CharacterInputControl.cs" />
     <Compile Include="Assets\_Characters\Scripts\Highlights.cs" />
-    <Compile Include="Assets\_Characters\Scripts\IInteractable.cs" />
     <Compile Include="Assets\_Characters\Scripts\Interactable.cs" />
     <Compile Include="Assets\_Characters\Scripts\InteractableControl.cs" />
     <Compile Include="Assets\_Characters\Scripts\MainCanvas.cs" />

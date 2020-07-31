@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StructureControl : MonoBehaviour, IsActionable {
     
@@ -22,7 +20,6 @@ public class StructureControl : MonoBehaviour, IsActionable {
     // Update is called once per frame
     void Update ()
     {
-
         if (action)
         {
             
